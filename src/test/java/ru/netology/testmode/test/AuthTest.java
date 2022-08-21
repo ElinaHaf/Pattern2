@@ -18,7 +18,6 @@ class AuthTest {
 
     @BeforeEach
     void setup() {
-        Configuration.headless = true;
         open("http://localhost:9999");
     }
 
@@ -26,9 +25,6 @@ class AuthTest {
     @DisplayName("Should successfully login with active registered user")
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
         var registeredUser = getRegisteredUser("active");
-        // TODO: добавить логику теста, в рамках которого будет выполнена попытка входа в личный кабинет с учётными
-        //  данными зарегистрированного активного пользователя, для заполнения полей формы используйте
-        //  пользователя registeredUser;
         $("[data-test-id=login] input").sendKeys(registeredUser.getLogin());
         $("[data-test-id=password] input").sendKeys(registeredUser.getPassword());
         $("[data-test-id=action-login]").click();
@@ -43,16 +39,12 @@ class AuthTest {
         $("[data-test-id=password] input").sendKeys(notRegisteredUser.getPassword());
         $("[data-test-id=action-login]").click();
         $(By.className("notification__content")).shouldHave(Condition.text("Неверно указан логин или пароль")).shouldBe(Condition.visible);
-        // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет
-        //  незарегистрированного пользователя, для заполнения полей формы используйте пользователя notRegisteredUser
     }
 
     @Test
     @DisplayName("Should get error message if login with blocked registered user")
     void shouldGetErrorIfBlockedUser() {
         var blockedUser = getRegisteredUser("blocked");
-        // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет,
-        //  заблокированного пользователя, для заполнения полей формы используйте пользователя blockedUser
         $("[data-test-id=login] input").sendKeys(blockedUser.getLogin());
         $("[data-test-id=password] input").sendKeys(blockedUser.getPassword());
         $("[data-test-id=action-login]").click();
@@ -68,9 +60,6 @@ class AuthTest {
         $("[data-test-id=password] input").sendKeys(registeredUser.getPassword());
         $("[data-test-id=action-login]").click();
         $(By.className("notification__content")).shouldHave(Condition.text("Неверно указан логин или пароль")).shouldBe(Condition.visible);
-        // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет с неверным
-        //  логином, для заполнения поля формы "Логин" используйте переменную wrongLogin,
-        //  "Пароль" - пользователя registeredUser
     }
 
     @Test
@@ -82,8 +71,6 @@ class AuthTest {
         $("[data-test-id=password] input").sendKeys(wrongPassword);
         $("[data-test-id=action-login]").click();
         $(By.className("notification__content")).shouldHave(Condition.text("Неверно указан логин или пароль")).shouldBe(Condition.visible);
-        // TODO: добавить логику теста в рамках которого будет выполнена попытка входа в личный кабинет с неверным
-        //  паролем, для заполнения поля формы "Логин" используйте пользователя registeredUser,
-        //  "Пароль" - переменную wrongPassword
+
     }
 }
